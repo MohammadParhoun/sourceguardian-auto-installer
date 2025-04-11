@@ -27,9 +27,6 @@ A Bash script to automatically download and configure SourceGuardian loaders for
 ## 🧪 Tested On
 
 - AlmaLinux 8
-- CentOS 7
-- Debian 11
-- Ubuntu 22.04
 
 ---
 
