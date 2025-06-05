@@ -20,6 +20,11 @@ RESET="\e[0m"
 required_packages=(unzip wget)
 missing_packages=()
 
+if [[ $EUID -ne 0 ]]; then
+    echo -e "${RED}This script must be run as root.${RESET}"
+    exit 1
+fi
+
 install() {
 
     mkdir -p /usr/local/lib/loaders/
@@ -37,8 +42,10 @@ install() {
     for php in ${php_versions[@]}; do
         path=$(echo $php | tr -d ".")
         if [[ -f /usr/local/php$path/lib/php.ini ]]; then
-        echo "extension=/usr/local/lib/loaders/ixed.$php.lin" >> /usr/local/php$path/lib/php.ini
-        systemctl restart php-fpm$path && echo -e "${GREEN} Source Guardian has been successfully installed on $php.${RESET}"
+            if ! grep "extension=/usr/local/lib/loaders/ixed.$php.lin" "/usr/local/php$path/lib/php.ini" &> /dev/null; then
+            echo "extension=/usr/local/lib/loaders/ixed.$php.lin" >> /usr/local/php$path/lib/php.ini
+            fi
+            systemctl restart php-fpm$path && echo -e "${GREEN} Source Guardian has been successfully installed on $php.${RESET}"
         else
             echo -e "${RED}The file /usr/local/php$path/lib/php.ini doesn't exist${RESET}"
             echo -e "${RED}Source Guardian failed to install on $php.${RESET}"
