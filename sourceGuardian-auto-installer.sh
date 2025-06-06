@@ -45,7 +45,7 @@ install() {
             if ! grep "extension=/usr/local/lib/loaders/ixed.$php.lin" "/usr/local/php$path/lib/php.ini" &> /dev/null; then
             echo "extension=/usr/local/lib/loaders/ixed.$php.lin" >> /usr/local/php$path/lib/php.ini
             fi
-            systemctl restart php-fpm$path && echo -e "${GREEN} Source Guardian has been successfully installed on $php.${RESET}"
+            systemctl restart php-fpm$path && echo -e "${GREEN}Source Guardian has been successfully installed on $php.${RESET}"
         else
             echo -e "${RED}The file /usr/local/php$path/lib/php.ini doesn't exist${RESET}"
             echo -e "${RED}Source Guardian failed to install on $php.${RESET}"
